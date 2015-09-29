@@ -12,6 +12,6 @@
     "nimrod": "./bin/nimrod.js"
   },
   "scripts": {
-    "compile": "lone && mv .lone/dist/nimrod ./dist/nimrod"
+    "compile": "GYP_DEFINES='node_v8_options=\"--harmony_proxies\"' lone && mv .lone/dist/nimrod ./dist/nimrod"
   }
 }
