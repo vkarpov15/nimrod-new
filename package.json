@@ -1,0 +1,17 @@
+{
+  "name": "nimrod",
+  "dependencies": {
+    "asyncblock": "2.2.0",
+    "debug": "2.2.0",
+    "mongodb": "2.0.44"
+  },
+  "devDependencies": {
+    "lone": "0.4.2"
+  },
+  "bin": {
+    "nimrod": "./bin/nimrod.js"
+  },
+  "scripts": {
+    "compile": "lone && mv .lone/dist/nimrod ./dist/nimrod"
+  }
+}
