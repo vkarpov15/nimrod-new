@@ -11,7 +11,7 @@ describe('SyncDriver', function() {
     asyncblock((flow) => {
       flow.errorCallback = done;
 
-      const context = nimrod(flow).connect(URI);
+      const context = nimrod(URI, flow);
       const db = context.db;
 
       db.test.deleteMany({});
