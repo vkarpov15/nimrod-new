@@ -3,15 +3,17 @@
   "dependencies": {
     "asyncblock": "2.2.0",
     "debug": "2.2.0",
-    "mongodb": "2.0.44"
+    "mongodb": "2.1.x"
   },
   "devDependencies": {
-    "lone": "0.4.2"
+    "lone": "0.4.2",
+    "mocha": "2.3.4"
   },
   "bin": {
     "nimrod": "./bin/nimrod.js"
   },
   "scripts": {
-    "compile": "GYP_DEFINES='node_v8_options=\"--harmony_proxies\"' lone && mv .lone/dist/nimrod ./dist/nimrod"
+    "compile": "GYP_DEFINES='node_v8_options=\"--harmony_proxies\"' lone && mv .lone/dist/nimrod ./dist/nimrod",
+    "test": "mocha --harmony_proxies ./test/*.test.js"
   }
 }

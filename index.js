@@ -1,9 +1,9 @@
 'use strict';
 
-let common = require('./lib/common');
-let DB = require('./lib/db');
-let debug = require('debug')('nimrod:driver');
-let mongodb = require('mongodb');
+const DB = require('./lib/db');
+const common = require('./lib/common');
+const debug = require('debug')('nimrod:driver');
+const mongodb = require('mongodb');
 
 const DEFAULT_URI = 'mongodb://localhost:27017/test';
 
@@ -12,7 +12,7 @@ class SyncDriver {
     this.flow = flow;
   }
 
-  $connect(uri) {
+  connect(uri) {
     debug(`connecting to ${uri || DEFAULT_URI}`);
     let _db = common.$sync(mongodb.MongoClient.connect(uri || DEFAULT_URI),
       this.flow);
@@ -27,24 +27,16 @@ class SyncDriver {
         return db.collection(key);
       }
     });
-    debug(`returning proxy`);
-    return { proxy: p, db: db };
+
+    return {
+      db: p,
+      setFlow: function(flow) {
+        db.flow = flow;
+      }
+    };
   }
 }
 
 module.exports = function(flow) {
   return new SyncDriver(flow);
 }
-
-/*asyncblock(function(flow) {
-  Promise.prototype.$sync = function() {
-    let cb = flow.add();
-    this.then(function(res) { cb(null, res) }, function(err) { cb(err); });
-    return flow.wait();
-  };
-  console.log(0);
-  var db =
-    mongodb.MongoClient.connect('mongodb://localhost:27017/test').$sync();
-  console.log(1);
-  console.log(db.collection('test').find({}).toArray().$sync());
-});*/
