@@ -19,6 +19,7 @@ describe('SyncDriver', function() {
       db.test.insertOne({ x: 1 });
       var x = db.test.find();
       assert.equal(x.length, 1);
+      assert.equal(db.test.findOne().x, 1);
       done();
     });
   });
