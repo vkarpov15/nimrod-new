@@ -26,7 +26,7 @@ describe('SyncDriver', function() {
     });
   });
 
-  it('listCollections()', (done) => asyncblock((flow) => {
+  it('listCollections()', (done) => (asyncblock((flow) => {
     flow.errorCallback = done;
     const context = nimrod(URI, flow);
     const db = context.db;
@@ -39,5 +39,17 @@ describe('SyncDriver', function() {
       'test'
     ]);
     done();
-  }));
+  })));
+
+  it('find() cursor', done => (asyncblock((flow) => {
+    flow.errorCallback = done;
+    const context = nimrod(URI, flow);
+    const db = context.db;
+
+    db.dropDatabase();
+    db.test.insertOne({ x: 1 });
+    const cursor = db.test.find();
+    assert.deepEqual(_.omit(cursor.next(), '_id'), { x: 1 });
+    done();
+  })));
 });
