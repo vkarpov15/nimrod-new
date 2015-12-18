@@ -34,10 +34,7 @@ describe('SyncDriver', function() {
     db.dropDatabase();
     db.test.insertOne({ x: 1 });
     const collections = db.listCollections();
-    assert.deepEqual(_.pluck(collections, 'name').sort(), [
-      'system.indexes',
-      'test'
-    ]);
+    assert.ok(_.pluck(collections, 'name').indexOf('test') !== -1);
     done();
   })));
 
