@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const assert = require('assert');
 const asyncblock = require('asyncblock');
 const nimrod = require('../');
@@ -14,6 +15,7 @@ describe('SyncDriver', function() {
       const context = nimrod(URI, flow);
       const db = context.db;
 
+      db.dropDatabase();
       db.test.deleteMany({});
 
       db.test.insertOne({ x: 1 });
@@ -23,4 +25,19 @@ describe('SyncDriver', function() {
       done();
     });
   });
+
+  it('listCollections()', (done) => asyncblock((flow) => {
+    flow.errorCallback = done;
+    const context = nimrod(URI, flow);
+    const db = context.db;
+
+    db.dropDatabase();
+    db.test.insertOne({ x: 1 });
+    const collections = db.listCollections();
+    assert.deepEqual(_.pluck(collections, 'name').sort(), [
+      'system.indexes',
+      'test'
+    ]);
+    done();
+  }));
 });
