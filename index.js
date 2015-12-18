@@ -29,4 +29,7 @@ module.exports = function(uri, flow) {
       db.flow = flow;
     }
   };
-}
+};
+
+module.exports.cursorSymbol = require('./lib/cursor').SYMBOL;
+console.log(module.exports.cursorSymbol);

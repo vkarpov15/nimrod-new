@@ -49,6 +49,7 @@ describe('SyncDriver', function() {
     db.dropDatabase();
     db.test.insertOne({ x: 1 });
     const cursor = db.test.find();
+    assert.ok(cursor[nimrod.cursorSymbol]);
     assert.deepEqual(_.omit(cursor.next(), '_id'), { x: 1 });
     done();
   })));
